@@ -1,0 +1,189 @@
+.wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tableHeader {
+  min-height: 50px;
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.tableContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% - 50px);
+  background-image: url("shared/assets/images/table.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  aspect-ratio: 9 / 16;
+  position: relative;
+}
+
+.bottle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  animation: spin 20s linear infinite;
+  transform-origin: 50% 50%;
+  z-index: 3;
+}
+
+.bottleImg {
+  height: 25%;
+  cursor: pointer;
+}
+
+.players {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  max-width: 600px;
+  border-radius: 50%;
+}
+
+.player {
+  aspect-ratio: 9 / 16;
+  width: 20%;
+  height: 20%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  top: 0;
+  transform-origin: 50% 240%;
+}
+
+.playerInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.player:nth-child(1) {
+  transform: rotate(0deg);
+}
+
+.player:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+.player:nth-child(2) .playerInner {
+  transform: rotate(-45deg);
+}
+
+.player:nth-child(3) {
+  transform: rotate(90deg);
+}
+
+.player:nth-child(3) .playerInner {
+  transform: rotate(-90deg);
+}
+
+.player:nth-child(4) {
+  transform: rotate(135deg);
+}
+
+.player:nth-child(4) .playerInner {
+  transform: rotate(-135deg);
+}
+
+.player:nth-child(5) {
+  transform: rotate(180deg);
+}
+
+.player:nth-child(5) .playerInner {
+  transform: rotate(-180deg);
+}
+
+.player:nth-child(6) {
+  transform: rotate(225deg);
+}
+
+.player:nth-child(6) .playerInner {
+  transform: rotate(-225deg);
+}
+
+.player:nth-child(7) {
+  transform: rotate(270deg);
+}
+
+.player:nth-child(7) .playerInner {
+  transform: rotate(-270deg);
+}
+
+.player:nth-child(8) {
+  transform: rotate(315deg);
+}
+
+.player:nth-child(8) .playerInner {
+  transform: rotate(-315deg);
+}
+
+.playerImageBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85%;
+  height: 85%;
+  aspect-ratio: 1 / 1;
+}
+
+.image {
+  border-radius: 50%;
+  box-shadow: 1px 1px 8px 0 rgba(34, 60, 80, 0.2);
+  overflow: hidden;
+  height: 80%;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 20%;
+  width: 100%;
+  gap: 4px;
+  font-size: 100%;
+  color: var(--text);
+  opacity: 0.8;
+  font-weight: 300;
+}
+
+.name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.age {
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: end;
+  min-width: 17px;
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

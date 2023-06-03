@@ -1,0 +1,17 @@
+.replyBig {
+  right: -35px;
+}
+
+.reply {
+  position: absolute;
+  right: -28px;
+  bottom: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reply svg {
+  font-size: 24px;
+}

@@ -1,0 +1,9 @@
+.img {
+  display: flex;
+  grid-area: img;
+  margin-top: auto;
+  cursor: pointer;
+  border-radius: 50%;
+  min-width: 32px;
+  height: 32px;
+}

@@ -1,0 +1,34 @@
+.button {
+  border-radius: 7px;
+  padding: 0 10px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid;
+  outline: none;
+  color: $buttonTextColor;
+
+  &.default {
+    border-color: $buttonColor;
+    background-color: transparent;
+  }
+
+  &.primary {
+    border-color: $buttonColor;
+    background-color: $buttonColor;
+  }
+
+  &.text {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  &.link {
+    background-color: transparent;
+    border-color: transparent;
+    color: $linkColor;
+  }
+}

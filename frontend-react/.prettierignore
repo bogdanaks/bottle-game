@@ -1,0 +1,6 @@
+node_modules
+dist
+.storybook
+.nest
+public
+storybook-staic

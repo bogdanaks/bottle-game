@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  color: var(--text);
+  background-color: var(--bg);
+}

@@ -1,0 +1,15 @@
+export enum SoketEvents {
+  GameStart = "game:start",
+  MessageAdd = "message:add",
+  MessageGet = "message:get",
+  MessageUpdate = "message:update",
+  MessageUpdateAll = "message:update_all",
+  RoomGet = "room:get",
+  RoomUpdate = "room:update",
+  RoomUpdateAll = "room:update_all",
+  RoomLeave = "room:leave",
+  RoomUserJoin = "room:join",
+  RoomUserLeave = "room:leave",
+  UsersGet = "users:get",
+  UsersUpdateAll = "users:update_all",
+}

@@ -1,0 +1,29 @@
+{
+  "name": "game-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ngrok": "ngrok http 5001",
+    "ngrok-set-token": "ngrok config add-authtoken 2B2CSR9kkvv4W26BOmZ3aWpnJoW_3j531dbrxxyeKvFHH8wR",
+    "dev": "nodemon .",
+    "redis-start": "redis-server",
+    "redis-clear": "redis-cli flushall",
+    "debug": "nodemon --inspect .",
+    "lt": "npx localtunnel --port 5001"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "awilix": "^8.0.1",
+    "dotenv": "^16.1.3",
+    "redis": "^4.6.7"
+  }
+}

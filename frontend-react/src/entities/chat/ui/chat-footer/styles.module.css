@@ -1,0 +1,66 @@
+.wrapper {
+  background-color: var(--bg-2);
+  padding-bottom: 20px;
+}
+
+.input {
+  color: var(--text);
+  background-color: var(--bg);
+  border-radius: 1.15rem;
+}
+
+.replyContainer {
+  color: var(--hint);
+  height: 40px;
+}
+
+.replyName {
+  color: var(--btn);
+}
+
+.replyMessage {
+  font-weight: 300;
+  color: var(--text);
+}
+
+.msgContainer {
+  height: 40px;
+}
+
+.iconLeft {
+  color: var(--btn);
+}
+
+.iconLeft svg {
+  font-size: 24px;
+}
+
+.iconRight {
+  color: var(--hint);
+  min-width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.iconRight svg {
+  font-size: 24px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 36px;
+  height: 100%;
+  color: var(--btn);
+}
+
+.button svg {
+  font-size: 24px;
+}
+
+.divider {
+  background-color: var(--btn);
+  height: 75%;
+}

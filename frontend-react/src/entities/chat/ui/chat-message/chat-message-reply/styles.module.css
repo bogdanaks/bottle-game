@@ -1,0 +1,17 @@
+.replyMe {
+  color: var(--btn-text);
+}
+
+.replyThem {
+  color: var(--text);
+}
+
+.divider {
+  background-color: var(--btn-text);
+  height: 100%;
+  width: 2px;
+}
+
+.dividerThem {
+  background-color: var(--btn);
+}
