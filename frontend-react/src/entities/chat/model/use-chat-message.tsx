@@ -1,5 +1,6 @@
 import { useSpring } from "@react-spring/web"
 import { useDrag } from "@use-gesture/react"
+
 import { useTelegram } from "entities/telegram/model"
 
 interface UseMessageProps {
@@ -11,7 +12,7 @@ interface UseMessageProps {
 export const useChatMessage = ({ chatMessage, nextUser, prevUser }: UseMessageProps) => {
   const { user: tgUser } = useTelegram()
   const [spring, api] = useSpring(() => ({ x: 0 }))
-  const isMe = Number(tgUser.id) === Number(chatMessage.user_id)
+  const isMe = Number(tgUser.id) === Number(chatMessage.user.id)
 
   const bind = useDrag(
     ({ down, offset: [x] }) => {

@@ -18,4 +18,7 @@ export class UserToRoomEntity extends MainEntity {
   @OneToOne(() => RoomEntity, (room) => room.id, { eager: true })
   @JoinColumn({ name: "room_id" })
   room: RoomEntity
+
+  @Column()
+  position: number
 }

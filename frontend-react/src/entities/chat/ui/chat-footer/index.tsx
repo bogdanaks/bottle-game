@@ -1,12 +1,13 @@
 import { useState } from "react"
-
-import { useSendMessageMutation } from "entities/chat/api"
-import { useAppDispatch, useAppSelector } from "app/hooks"
-import { addMessage, selectChat, setReply } from "entities/chat/model/slice"
 import { HiOutlineArrowUturnLeft, HiOutlinePaperAirplane, HiOutlineXMark } from "react-icons/hi2"
 
-import styles from "./styles.module.css"
+import { useAppDispatch, useAppSelector } from "app/hooks"
+
+import { useSendMessageMutation } from "entities/chat/api"
+import { addMessage, selectChat, setReply } from "entities/chat/model/slice"
 import { useTelegram } from "entities/telegram/model"
+
+import styles from "./styles.module.css"
 
 export const ChatFooter = () => {
   const dispatch = useAppDispatch()

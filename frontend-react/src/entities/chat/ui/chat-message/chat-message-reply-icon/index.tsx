@@ -1,6 +1,6 @@
 import classNames from "classnames"
-import { HiChatBubbleOvalLeftEllipsis } from "react-icons/hi2"
 import { MotionValue, motion } from "framer-motion"
+import { HiChatBubbleOvalLeftEllipsis } from "react-icons/hi2"
 
 import styles from "./styles.module.css"
 

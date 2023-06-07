@@ -13,9 +13,10 @@ import storage from "redux-persist/lib/storage"
 
 import { authApi } from "entities/auth/api"
 import { authReducer } from "entities/auth/model/slice"
+import { chatApi } from "entities/chat/api"
 import { chatReducer } from "entities/chat/model/slice"
 import { consoleAlertReducer } from "entities/console-alert/model/slice"
-import { chatApi } from "entities/chat/api"
+import { gameReducer } from "entities/game/model/slice"
 
 const persistConfig = {
   key: "root",
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   consoleAlert: consoleAlertReducer,
   chat: chatReducer,
   auth: authReducer,
+  game: gameReducer,
   [authApi.reducerPath]: authApi.reducer,
   [chatApi.reducerPath]: chatApi.reducer,
 })

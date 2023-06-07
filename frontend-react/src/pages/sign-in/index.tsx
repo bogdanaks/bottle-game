@@ -1,8 +1,10 @@
+import { Navigate } from "react-router-dom"
+
 import { useAppSelector } from "app/hooks"
+
 import { selectIsAuth } from "entities/auth/model/slice"
 import { SignInForm } from "entities/auth/ui/sign-in-form"
 import { selectText } from "entities/console-alert/model/slice"
-import { Navigate } from "react-router-dom"
 
 const SignInPage = () => {
   const isAuth = useAppSelector(selectIsAuth)

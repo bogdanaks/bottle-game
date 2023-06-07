@@ -99,6 +99,7 @@ interface UserEntity {
   photo_url: string
   gender: string
   age: number
+  position: number
 }
 
 interface TgWebView {

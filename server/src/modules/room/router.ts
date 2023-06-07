@@ -7,7 +7,6 @@ const roomRouter = Router()
 
 function makeAPI({ roomController }: { roomController: RoomController }) {
   return {
-    findAll: (req: Request, res: Response) => roomController.getRooms(req, res),
     findFreeRoom: (req: Request, res: Response) => roomController.getFreeRoom(req, res),
     findRoomPlayers: (req: Request, res: Response) => roomController.getRoomPlayers(req, res),
   }
@@ -15,7 +14,6 @@ function makeAPI({ roomController }: { roomController: RoomController }) {
 
 const api = makeInvoker(makeAPI)
 
-roomRouter.get("/", api("findAll"))
 roomRouter.get("/free", api("findFreeRoom"))
 roomRouter.get("/players", api("findRoomPlayers"))
 

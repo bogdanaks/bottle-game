@@ -1,5 +1,6 @@
-import { config } from "shared/config"
 import { Socket, io } from "socket.io-client"
+
+import { config } from "shared/config"
 
 export let socket: Socket
 

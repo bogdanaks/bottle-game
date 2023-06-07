@@ -1,19 +1,23 @@
 import { TgUser } from "@/common/types"
-import { Repository } from "typeorm"
+import { In, Repository } from "typeorm"
 import { UserEntity } from "./user.entity"
 import { AppDataSource } from "@/common/data-source"
 import { TelegramService } from "../telegram/service"
+import { RedisStore } from "@/services/redis-store"
 
 interface UserServiceProps {
   tgService: TelegramService
+  redisStore: RedisStore
 }
 
 export class UserService {
   protected userRepository: Repository<UserEntity>
   private tgService: TelegramService
+  private redisStore
 
-  constructor({ tgService }: UserServiceProps) {
+  constructor({ tgService, redisStore }: UserServiceProps) {
     this.tgService = tgService
+    this.redisStore = redisStore
     this.userRepository = AppDataSource.getRepository<UserEntity>(UserEntity)
   }
 
@@ -31,7 +35,11 @@ export class UserService {
     }
   }
 
-  async getUserById(id: string) {
-    return await this.userRepository.findOne({ where: { id } })
+  async getUserById(userId: string) {
+    return await this.userRepository.findOne({ where: { id: userId } })
+  }
+
+  async getUsersByIds(userIds: string[]) {
+    return await this.userRepository.find({ where: { id: In(userIds) } })
   }
 }

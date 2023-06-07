@@ -1,17 +1,19 @@
-import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from "framer-motion"
-
-import styles from "./styles.module.css"
 import classNames from "classnames"
-import { useChatMessage } from "entities/chat/model/use-chat-message"
+import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { useEffect } from "react"
+
 import { useAppDispatch } from "app/hooks"
+
 import { setReply } from "entities/chat/model/slice"
+import { useChatMessage } from "entities/chat/model/use-chat-message"
 import { useTelegram } from "entities/telegram/model"
-import { ChatMessageReply } from "./chat-message-reply"
-import { ChatMessageUserName } from "./chat-message-user-name"
-import { ChatMessageText } from "./chat-message-text"
-import { ChatMessageReplyIcon } from "./chat-message-reply-icon"
 import { UserAvatar } from "entities/user/ui"
+
+import { ChatMessageReply } from "./chat-message-reply"
+import { ChatMessageReplyIcon } from "./chat-message-reply-icon"
+import { ChatMessageText } from "./chat-message-text"
+import { ChatMessageUserName } from "./chat-message-user-name"
+import styles from "./styles.module.css"
 
 interface ChatMessageProps {
   chatMessage: ChatMessage

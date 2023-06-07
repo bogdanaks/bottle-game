@@ -12,4 +12,6 @@ export enum SoketEvents {
   RoomUserLeave = "room:leave",
   UsersGet = "users:get",
   UsersUpdateAll = "users:update_all",
+  GameTick = "game:tick",
+  GameInit = "game:init",
 }

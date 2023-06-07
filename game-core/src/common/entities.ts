@@ -1,4 +1,6 @@
-export interface RoomEntity {}
+export interface RoomEntity {
+  //
+}
 
 export interface UserEntity {
   id: string
@@ -14,9 +16,7 @@ export interface UserEntity {
 }
 
 export interface MessageEntity {
-  user_id: string
   user: UserEntity
-  room_id: string
   reply_id: string | null
   reply: MessageEntity | null
   message: string

@@ -1,7 +1,9 @@
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useSignInMutation } from "../api"
-import { useTelegram } from "entities/telegram/model"
 import { useNavigate } from "react-router-dom"
+
+import { useTelegram } from "entities/telegram/model"
+
+import { useSignInMutation } from "../api"
 
 interface SignInFormData {
   gender: "M" | "W"

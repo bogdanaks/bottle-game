@@ -1,5 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react"
+
 import { baseQueryAuth } from "app/apiSlice"
+
 import { SoketEvents } from "../model/enums"
 import { socket } from "../model/socket"
 

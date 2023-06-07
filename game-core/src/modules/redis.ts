@@ -1,8 +1,6 @@
-import { createClient } from "redis"
 import { RedisStore } from "./redis-store"
+import { Redis } from "ioredis"
 
-type ClientRedis = ReturnType<typeof createClient>
-type SubCb = (data: string) => void
 interface EventData {
   type: string
   userId: string
@@ -11,64 +9,35 @@ interface EventData {
 }
 
 export class RedisService {
-  public parentClient: ClientRedis
-  public pubClient: ClientRedis
-  public subClient: ClientRedis
-  public redisStore
+  private pubClient: Redis
+  private subClient: Redis
 
-  constructor({ redisStore }: { redisStore: RedisStore }) {
-    this.parentClient = createClient()
-    this.pubClient
-    this.subClient
-    this.redisStore = redisStore
-  }
-
-  public async start() {
-    console.log("Redis: Start")
-    await this.redisStore.start()
-    this.parentClient.on("ready", () => console.log("Redis: Parent client connected!"))
-    this.parentClient.on("error", (err) => console.log("Redis: Parent Client Error", err))
-    await this.parentClient.connect().then(async () => {
-      this.pubClient = await this.createDuplicate()
-      this.subClient = await this.createDuplicate()
-      console.log("Redis: All clients conect run")
-    })
-  }
-
-  public async createDuplicate() {
-    const newClient = this.parentClient.duplicate()
-    newClient.on("ready", () => console.log("Redis: New client connected!"))
-    newClient.on("error", (err) => console.log("Redis: New client Error", err))
-    await newClient.connect()
-    return newClient
+  constructor() {
+    this.pubClient = new Redis()
+    this.subClient = new Redis()
   }
 
   public async pub(channel: string, payload: EventData) {
-    if (!this.pubClient.isReady) {
-      throw new Error("Redis: Pub client is not ready")
-    }
+    console.log(`Pub to ${channel} payload - ${JSON.stringify(payload)}`)
     await this.pubClient.publish(channel, JSON.stringify(payload))
   }
 
-  public sub(channel: string, cb: SubCb) {
-    if (!this.subClient.isReady) {
-      throw new Error("Redis: Sub client is not ready")
-    }
-    this.subClient.subscribe(channel, cb)
+  public sub(channel: string) {
+    this.subClient.psubscribe(channel, (err, count) => {
+      if (err) console.error(err.message)
+      console.log(`Subscribed to ${count} channels.`)
+    })
   }
 
-  public subByClient(client: ClientRedis, channel: string, cb: SubCb) {
-    if (!client.isReady) {
-      throw new Error("Redis: subByClient is not ready")
-    }
-    client.subscribe(channel, cb)
+  public subByClient(client: Redis, channel: string, cb: any) {
+    client.psubscribe(channel, cb)
   }
 
-  public async quitByClient(client: ClientRedis) {
-    if (!client.isReady) {
-      throw new Error("Redis: quitByClient is not ready")
-    }
-
+  public async quitByClient(client: Redis) {
     await client.quit()
+  }
+
+  public on(event: "pmessage", cb: (pattern: string, channel: string, message: string) => void) {
+    return this.subClient.on(event, cb)
   }
 }

@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+
 import { RootState } from "app/store"
 
 const initialState: ChatState = {
@@ -7,12 +8,20 @@ const initialState: ChatState = {
   socketId: null,
   roomId: null,
   reply: null,
+  isLoading: true,
 }
 
 export const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
+    setInit: (state, actions: PayloadAction<InitState>) => {
+      state.messages = actions.payload.messages
+      state.users = actions.payload.users
+      state.roomId = actions.payload.roomId
+      state.socketId = actions.payload.socketId
+      state.isLoading = false
+    },
     setReply: (state, actions: PayloadAction<ChatMessage | null>) => {
       state.reply = actions.payload
     },
@@ -40,6 +49,9 @@ export const chatSlice = createSlice({
     leaveUser: (state, action: PayloadAction<string>) => {
       state.users.filter((i) => String(i.id) !== String(action.payload))
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload
+    },
   },
 })
 
@@ -53,6 +65,8 @@ export const {
   joinUser,
   leaveUser,
   setUsers,
+  setLoading,
+  setInit,
 } = chatSlice.actions
 
 export const selectChat = (state: RootState) => state.chat

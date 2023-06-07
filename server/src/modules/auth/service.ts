@@ -9,7 +9,7 @@ interface AuthServiceProps {
 }
 
 export class AuthService {
-  protected msgRepository: Repository<MessageEntity>
+  protected msgRepository
   protected userService
 
   constructor({ userService }: AuthServiceProps) {

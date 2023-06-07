@@ -12,12 +12,12 @@ export class RoomController {
     this.roomService = roomService
   }
 
-  async getRooms(req: Request, res: Response) {
-    const rooms = await this.roomService.getRooms()
-    return res.send({ data: rooms })
-  }
-
   async getFreeRoom(req: Request, res: Response) {
+    const userId = req.query.user_id
+    if (!userId) {
+      return res.send({ error: "user_id is required" })
+    }
+
     const room = await this.roomService.getFreeRoom()
     return res.send({ data: room })
   }

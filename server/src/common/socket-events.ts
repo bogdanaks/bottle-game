@@ -6,7 +6,10 @@ export enum SocketEvents {
   MessageAdd = "message:add",
   MessageGet = "message:get",
   MessageUpdate = "message:update",
+  RoomGet = "room:get",
   RoomUserJoin = "room:join",
   RoomUserLeave = "room:leave",
   UsersGet = "users:get",
+  GameTick = "game:tick",
+  GameInit = "game:init",
 }

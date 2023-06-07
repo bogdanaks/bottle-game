@@ -75,17 +75,14 @@ const mockUserEntity = {
   photo_url: "/photos/856090780.jpg",
   gender: "M",
   age: 18,
+  position: 1,
   created_at: "2023-05-27T02:06:01.507Z",
   updated_at: "2023-05-27T02:06:01.507Z",
 }
 
 export const mockMessage: ChatMessage = {
-  id: 76,
-  created_at: "2023-05-28T15:27:02.656Z",
-  updated_at: "2023-05-28T15:27:02.656Z",
-  user_id: "856090780",
+  created_at: Date.now(),
   user: mockUserEntity,
-  room_id: "1",
   reply_id: null,
   reply: null,
   message: "Mock message",

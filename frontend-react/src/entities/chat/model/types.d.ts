@@ -6,16 +6,20 @@ interface ChatState {
   socketId: string | null
   roomId: string | null
   reply: ChatMessage | null
+  isLoading: boolean
+}
+
+interface InitState {
+  messages: ChatMessage[]
+  users: UserEntity[]
+  socketId: string
+  roomId: string
 }
 
 interface ChatMessage {
-  id: number
   message: string
-  room_id: string
   user: UserEntity
-  user_id: string
-  created_at: string
-  updated_at: string
+  created_at: number
   reply_id: string | null
   reply: ChatMessage | null
 }

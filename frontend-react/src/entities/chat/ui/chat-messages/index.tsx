@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react"
+
+import { useAppSelector } from "app/hooks"
+
+import { selectChat } from "entities/chat/model/slice"
+
 import { ChatMessage } from "../chat-message"
 import styles from "./styles.module.css"
-import { useAppSelector } from "app/hooks"
-import { selectChat } from "entities/chat/model/slice"
 
 export const ChatMessages = () => {
   const chat = useAppSelector(selectChat)

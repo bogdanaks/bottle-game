@@ -1,5 +1,7 @@
-import { useAppSelector } from "app/hooks"
 import { Navigate, Outlet, useLocation } from "react-router-dom"
+
+import { useAppSelector } from "app/hooks"
+
 import { selectIsAuth } from "../model/slice"
 
 export const RequireAuth = () => {

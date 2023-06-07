@@ -1,4 +1,4 @@
-import { createClient } from "redis"
+import { Callback, Redis } from "ioredis"
 
 interface PabPayload {
   roomId: string
@@ -7,48 +7,31 @@ interface PabPayload {
   data?: any
 }
 
-type SubCallback = (data: string) => void
-
 export class RedisAdapter {
-  public redisClient
   public pubClient
   public subClient
 
   constructor() {
-    this.redisClient = createClient()
-    this.pubClient = this.redisClient.duplicate()
-    this.subClient = this.redisClient.duplicate()
+    this.pubClient = new Redis()
+    this.subClient = new Redis()
   }
 
-  public sub(roomId: string, cb: SubCallback) {
-    if (!this.subClient.isReady) {
-      throw new Error("Redis: Sub client is not ready")
-    }
-    this.subClient.pSubscribe(roomId, cb)
+  public sub(roomId: string, cb: any) {
+    this.subClient.psubscribe(roomId, cb)
   }
 
   public async pub(roomId: string, payload: PabPayload) {
-    if (!this.pubClient.isReady) {
+    if (this.pubClient.status !== "ready") {
       throw new Error("Redis: Pub client is not ready")
     }
-    await this.pubClient.publish(roomId, JSON.stringify({ ...payload, type: "join" }))
+    await this.pubClient.publish(`roomId:${roomId}`, JSON.stringify(payload))
   }
 
-  public async isClientReady(client: typeof this.redisClient) {
-    return client.isReady
+  public async isClientReady(client: Redis) {
+    return client.status === "ready"
   }
 
-  public async connect() {
-    this.redisClient.on("ready", () => console.log("Redis: Connected!"))
-    this.redisClient.on("error", (err) => console.log("Redis: Client error", err))
-    await this.redisClient.connect()
-
-    this.pubClient.on("ready", () => console.log("Redis: Pub connected!"))
-    this.pubClient.on("error", (err) => console.log("Redis: Pub client error", err))
-    this.subClient.on("ready", () => console.log("Redis: Sub connected!"))
-    this.subClient.on("error", (err) => console.log("Redis: Sub client error", err))
-
-    await this.pubClient.connect()
-    await this.subClient.connect()
+  public on(event: "pmessage", cb: (pattern: string, channel: string, message: string) => void) {
+    return this.subClient.on(event, cb)
   }
 }

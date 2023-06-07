@@ -1,5 +1,5 @@
 import { createContainer, InjectionMode, asClass, AwilixContainer } from "awilix"
-import { ChatController, ChatService } from "@/modules/chat"
+import { ChatController } from "@/modules/chat"
 import { AuthController } from "@/modules/auth"
 import { AuthService } from "@/modules/auth/service"
 import { MessageController, MessageService } from "@/modules/message"
@@ -10,7 +10,8 @@ import { IoConnector } from "./io"
 import { io } from "@/app"
 import { RedisService } from "@/services/redis"
 import { RedisAdapter } from "@/services/redis-adapter"
-import { SocketService } from "@/services/socket"
+import { SocketService } from "@/services/socket-service"
+import { RedisStore } from "@/services/redis-store"
 
 export const DI = createContainer({
   injectionMode: InjectionMode.PROXY,
@@ -18,11 +19,11 @@ export const DI = createContainer({
   socketService: SocketService
   redisAdapter: RedisAdapter
   redisService: RedisService
+  redisStore: RedisStore
   io: typeof io
   ioConnector: IoConnector
   tgService: TelegramService
   userService: UserService
-  chatService: ChatService
   chatController: ChatController
   authController: AuthController
   authService: AuthService
@@ -34,6 +35,7 @@ export const DI = createContainer({
 }>
 
 DI.register({
+  redisStore: asClass(RedisStore).singleton(),
   socketService: asClass(SocketService).singleton(),
   redisAdapter: asClass(RedisAdapter).singleton(),
   redisService: asClass(RedisService).singleton(),
@@ -41,7 +43,6 @@ DI.register({
   chatController: asClass(ChatController),
   tgService: asClass(TelegramService),
   userService: asClass(UserService),
-  chatService: asClass(ChatService),
   authController: asClass(AuthController),
   authService: asClass(AuthService),
   messageController: asClass(MessageController),

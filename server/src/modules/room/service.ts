@@ -1,120 +1,93 @@
 import { Repository } from "typeorm"
 import { AppDataSource } from "@/common/data-source"
 import { RoomEntity } from "./room.entity"
-import { IoType } from "../chat/types"
-import { UserToRoomEntity } from "../user-to-room/user-to-room.entity"
-import { UserEntity } from "../user"
+import { IoType } from "@/common/types"
+import { RedisStore } from "@/services/redis-store"
+import { getFreePosition } from "@/libs/get-free-position"
+import { UserService } from "../user"
 
 interface RoomServiceProps {
   io: IoType
+  redisStore: RedisStore
+  userService: UserService
 }
 
 export class RoomService {
-  protected roomRepository: Repository<RoomEntity>
-  protected userToRoomRepository: Repository<UserToRoomEntity>
+  protected roomRepository
   protected io
+  protected redisStore
+  protected userService
 
-  constructor({ io }: RoomServiceProps) {
+  constructor({ io, redisStore, userService }: RoomServiceProps) {
     this.roomRepository = AppDataSource.getRepository<RoomEntity>(RoomEntity)
-    this.userToRoomRepository = AppDataSource.getRepository<UserToRoomEntity>(UserToRoomEntity)
     this.io = io
+    this.redisStore = redisStore
+    this.userService = userService
+  }
+
+  async getNewRoom(userId: string) {
+    let freeRoom = ""
+    let isNew = false
+    const beforeRoomId = await this.redisStore.getUserRoomId(String(userId))
+
+    if (beforeRoomId) {
+      freeRoom = beforeRoomId
+    } else {
+      freeRoom = await this.getFreeRoom()
+      isNew = true
+    }
+
+    return {
+      roomId: String(freeRoom),
+      isNew,
+    }
   }
 
   async getFreeRoom() {
-    const activeRoomsWithFreeSlots = await this.userToRoomRepository
-      .createQueryBuilder()
-      .select("room_id")
-      .groupBy("room_id")
-      .having("count(*) < 2")
-      .getRawMany()
+    const freeRoom = await this.redisStore.getFreeRoom()
+    if (freeRoom) return freeRoom
 
-    if (!activeRoomsWithFreeSlots.length) {
-      const activeRoomsIds = this.userToRoomRepository
-        .createQueryBuilder("ur")
-        .select("room_id")
-        .getQuery()
-
-      const freeRoom = await this.roomRepository
-        .createQueryBuilder("room")
-        .where(`id NOT IN (${activeRoomsIds})`)
-        .orderBy({
-          id: "ASC",
-        })
-        .getOne()
-
-      if (!freeRoom) {
-        const newRoom = await this.createRoom()
-        return String(newRoom.id)
-      }
-
-      return String(freeRoom.id)
-    }
-
-    return activeRoomsWithFreeSlots[0].room_id
+    const newRoomId = await this.createRoom()
+    return newRoomId
   }
 
-  async createRoom(): Promise<RoomEntity> {
-    return (await this.roomRepository.insert({})).raw[0]
+  async createRoom(): Promise<string> {
+    const newRoomId = await this.redisStore.createRoom()
+    return newRoomId
   }
 
   async getRoomPlayers(roomId: string) {
-    const rooms = await this.userToRoomRepository.find({
-      where: { room_id: roomId },
+    const users = await this.redisStore.getUsersByRoomId(roomId)
+    const usersEntities = await this.userService.getUsersByIds(users.map((u) => u.userId))
+    const seedUsers = usersEntities.map((uE) => {
+      const position = users.find((i) => String(i.userId) === String(uE.id))
+      return { ...uE, position: position?.position }
     })
-    if (!rooms.length) return []
-
-    return rooms.map((room) => room.user)
+    return seedUsers
   }
 
   async joinToRoom(roomId: string, userId: string) {
-    const queryRunner = AppDataSource.createQueryRunner()
-    await queryRunner.connect()
-    await queryRunner.startTransaction()
-    let joinRoomId = roomId
-    const user = await queryRunner.manager.findOneBy(UserEntity, { id: userId })
-    if (!user) {
-      throw new Error("User undefined")
+    const users = await this.redisStore.getUsersByRoomId(roomId)
+    const usersWithoutMe = users.filter((i) => String(i.userId) !== String(userId))
+
+    const freePos = !usersWithoutMe.length ? 1 : getFreePosition(usersWithoutMe)
+    if (!freePos) {
+      throw new Error("Free pos is null")
     }
 
-    try {
-      const beforeRoom = await this.getPlayerRoom(userId)
-      if (beforeRoom) {
-        joinRoomId = beforeRoom.room_id
-        return
-      }
-
-      await queryRunner.manager
-        .createQueryBuilder()
-        .insert()
-        .into(UserToRoomEntity)
-        .values({ room_id: roomId, user_id: userId })
-        .onConflict(`("id") DO NOTHING`)
-        .execute()
-
-      await queryRunner.commitTransaction()
-    } catch (err) {
-      await queryRunner.rollbackTransaction()
-    } finally {
-      await queryRunner.release()
-    }
+    await this.redisStore.addUserInRoom(roomId, userId, String(freePos))
+    await this.redisStore.setUserRoom(roomId, userId)
+    await this.redisStore.addFreeRoom(roomId)
   }
 
   async leaveRoom(userId: string) {
-    const playerRoom = await this.getPlayerRoom(userId)
+    const playerRoom = await this.redisStore.getUserRoomId(userId)
     if (!playerRoom) return
-    console.log(`user ${userId} leave from ${playerRoom.room_id}`)
-    await this.userToRoomRepository.delete({ room_id: playerRoom.room_id, user_id: userId })
-  }
-
-  async getPlayersInRoom(roomId: string) {
-    return await this.userToRoomRepository.find({ where: { room_id: roomId } })
+    console.log(`user ${userId} leave from ${playerRoom}`)
+    await this.redisStore.delUserFomRoom(playerRoom, userId)
   }
 
   async getPlayerRoom(userId: string) {
-    return await this.userToRoomRepository.findOneBy({ user_id: userId })
-  }
-
-  async getRooms() {
-    return await this.roomRepository.find()
+    return await this.redisStore.getUserRoomId(userId)
   }
 }

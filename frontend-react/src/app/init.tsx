@@ -1,12 +1,13 @@
 import { useEffect } from "react"
+import { Navigate, Outlet } from "react-router-dom"
 
 import { useLoginMutation } from "entities/auth/api"
+import { selectText } from "entities/console-alert/model/slice"
 import { useTelegram } from "entities/telegram/model"
 
 import { Loader } from "shared/ui/loader"
-import { Navigate, Outlet } from "react-router-dom"
+
 import { useAppSelector } from "./hooks"
-import { selectText } from "entities/console-alert/model/slice"
 
 const InitProvider = () => {
   const telegram = useTelegram()

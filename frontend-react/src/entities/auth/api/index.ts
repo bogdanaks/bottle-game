@@ -1,7 +1,10 @@
 import { FetchBaseQueryError, createApi } from "@reduxjs/toolkit/dist/query/react"
+
 import { baseQueryAuth } from "app/apiSlice"
-import { setAuth } from "../model/slice"
+
 import { setText } from "entities/console-alert/model/slice"
+
+import { setAuth } from "../model/slice"
 
 export const authApi = createApi({
   reducerPath: "authApi",
