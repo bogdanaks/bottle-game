@@ -78,6 +78,7 @@ const mockUserEntity = {
   position: 1,
   created_at: "2023-05-27T02:06:01.507Z",
   updated_at: "2023-05-27T02:06:01.507Z",
+  hearts: 3,
 }
 
 export const mockMessage: ChatMessage = {

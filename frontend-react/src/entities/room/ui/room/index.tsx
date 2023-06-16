@@ -1,26 +1,33 @@
-import { useAppSelector } from "app/hooks"
-
-import { selectChat } from "entities/chat/model/slice"
+import { useRoom } from "entities/room/model/use-room"
 
 import { Bottle } from "../bottle"
+import { ConfirmKiss } from "../confirm-kiss"
+import { Header } from "../header"
+import { Kissing } from "../kissing"
 import { Player } from "../player"
+import { UserDetails } from "../user-details"
 import styles from "./styles.module.css"
 
 export const Room = () => {
-  const { roomId, users } = useAppSelector(selectChat)
+  const { scope, users, event, userDetails, handleKissClick } = useRoom()
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.tableHeader}>Room: {roomId}</div>
-      <div className={styles.tableContainer}>
+    <div className={styles.roomWrapper}>
+      <Header />
+      <div className={styles.container} ref={scope}>
+        <ConfirmKiss handleKissClick={handleKissClick} />
         <Bottle />
-        <ul className={styles.players}>
+        {userDetails && <UserDetails user={userDetails} />}
+        {event === "kissUser" && <Kissing />}
+        <ul className={styles.playersNew}>
           {Array(8)
             .fill(0)
             .map((_, index) => {
               const findUser = users.find((u) => Number(u.position) === index + 1)
-              if (findUser) return <Player key={index} player={findUser} />
-              return <li key={index} className={styles.player} />
+              if (findUser) {
+                return <Player key={index} player={findUser} />
+              }
+              return <li key={index} className={styles.playerNew} />
             })}
         </ul>
       </div>

@@ -1,0 +1,23 @@
+.tableHeader {
+  min-height: 50px;
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 0 24px;
+}
+
+.settingsBtn {
+  margin-left: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.settingsBtn svg {
+  font-size: 30px;
+  color: var(--hint);
+}

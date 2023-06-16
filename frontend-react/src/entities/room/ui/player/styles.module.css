@@ -7,8 +7,7 @@
   align-items: center;
   justify-content: center;
   color: var(--text);
-  top: 0;
-  transform-origin: 50% 240%;
+  z-index: 9999;
 }
 
 .playerInner {
@@ -19,71 +18,7 @@
   height: 100%;
   scale: 1;
   transition: all 0.2s ease;
-}
-
-.active {
-  scale: 1.15;
-  border: 1px solid red;
-}
-
-.player:nth-child(1) {
-  transform: rotate(0deg);
-}
-
-.player:nth-child(2) {
-  transform: rotate(45deg);
-}
-
-.player:nth-child(2) .playerInner {
-  transform: rotate(-45deg);
-}
-
-.player:nth-child(3) {
-  transform: rotate(90deg);
-}
-
-.player:nth-child(3) .playerInner {
-  transform: rotate(-90deg);
-}
-
-.player:nth-child(4) {
-  transform: rotate(135deg);
-}
-
-.player:nth-child(4) .playerInner {
-  transform: rotate(-135deg);
-}
-
-.player:nth-child(5) {
-  transform: rotate(180deg);
-}
-
-.player:nth-child(5) .playerInner {
-  transform: rotate(-180deg);
-}
-
-.player:nth-child(6) {
-  transform: rotate(225deg);
-}
-
-.player:nth-child(6) .playerInner {
-  transform: rotate(-225deg);
-}
-
-.player:nth-child(7) {
-  transform: rotate(270deg);
-}
-
-.player:nth-child(7) .playerInner {
-  transform: rotate(-270deg);
-}
-
-.player:nth-child(8) {
-  transform: rotate(315deg);
-}
-
-.player:nth-child(8) .playerInner {
-  transform: rotate(-315deg);
+  cursor: pointer;
 }
 
 .playerImageBox {
@@ -93,6 +28,7 @@
   width: 85%;
   height: 85%;
   aspect-ratio: 1 / 1;
+  position: relative;
 }
 
 .image {
@@ -128,4 +64,47 @@
   overflow: hidden;
   text-align: end;
   min-width: 17px;
+}
+
+.heart {
+  position: absolute;
+  right: 0;
+  top: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(10deg);
+  height: 35%;
+}
+
+.heart svg {
+  font-size: 4vh;
+}
+
+.counter {
+  position: absolute;
+  transform: rotate(-10deg);
+  color: var(--bg);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  font-size: 1.7vh;
+}
+
+@media screen and (max-height: 700px) {
+  .heart {
+    right: 1vh;
+  }
+
+  .info span {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .heart {
+    right: 2vh;
+  }
+
+  .info span {
+    font-size: 12px;
+  }
 }

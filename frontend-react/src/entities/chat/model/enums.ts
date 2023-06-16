@@ -14,4 +14,7 @@ export enum SoketEvents {
   UsersUpdateAll = "users:update_all",
   GameTick = "game:tick",
   GameInit = "game:init",
+  HistoryPush = "history:push",
+  SpinBottle = "spinBottle",
+  KissUser = "kissUser",
 }

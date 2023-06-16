@@ -10,13 +10,11 @@ import {
   joinUser,
   leaveUser,
   setInit,
-  setLoading,
   setMessages,
   setRoomId,
-  setUsers,
 } from "entities/chat/model/slice"
 import { setSocket, socket } from "entities/chat/model/socket"
-import { setGameState } from "entities/game/model/slice"
+import { pushHistory } from "entities/game/model/slice"
 import { useTelegram } from "entities/telegram/model"
 
 const SocketProvider = () => {
@@ -40,13 +38,10 @@ const SocketProvider = () => {
       console.log("Socket connect", socketConnected.id)
 
       timer = setTimeout(() => {
-        socketConnected.emit(
-          SoketEvents.GameInit,
-          (initState: InitState & { gameState: GameData }) => {
-            dispatch(setInit(initState))
-            dispatch(setGameState(initState.gameState))
-          }
-        )
+        socketConnected.emit(SoketEvents.GameInit, (initState: InitState) => {
+          dispatch(setInit(initState))
+          initState.lastHistory && dispatch(pushHistory(initState.lastHistory))
+        })
       }, 500)
     })
 
@@ -55,8 +50,7 @@ const SocketProvider = () => {
       dispatch(setRoomId(roomId))
     })
     socketConnected.on(SoketEvents.RoomUserJoin, (user: UserEntity) => {
-      console.log("room:join", user.id)
-      // dispatch(joinUser(user))
+      dispatch(joinUser(user))
     })
     socketConnected.on(SoketEvents.RoomUserLeave, (user_id: string) => {
       dispatch(leaveUser(user_id))
@@ -71,9 +65,11 @@ const SocketProvider = () => {
     })
 
     // GAME
-    socketConnected.on(SoketEvents.GameTick, (data: GamePayload) => {
-      console.log("data", data)
-      dispatch(setGameState(data.data))
+    // socketConnected.on(SoketEvents.GameTick, (data: GamePayload) => {
+    //   dispatch(setGameState(data.data))
+    // })
+    socketConnected.on(SoketEvents.HistoryPush, (data: HistoryEvent) => {
+      dispatch(pushHistory(data))
     })
 
     socketConnected.connect()
@@ -81,7 +77,6 @@ const SocketProvider = () => {
     return () => {
       socketConnected.removeAllListeners()
       setSocketConnected(null)
-      socketConnected.disconnect()
       clearTimeout(timer)
     }
   }, [socketConnected])

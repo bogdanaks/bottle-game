@@ -9,6 +9,8 @@ const initialState: ChatState = {
   roomId: null,
   reply: null,
   isLoading: true,
+  userPoses: {},
+  userDetails: null,
 }
 
 export const chatSlice = createSlice({
@@ -37,9 +39,6 @@ export const chatSlice = createSlice({
     setSocketId: (state, actions: PayloadAction<string>) => {
       state.socketId = actions.payload
     },
-    leaveRoom: (state) => {
-      state.roomId = ""
-    },
     setUsers: (state, action: PayloadAction<UserEntity[]>) => {
       state.users = action.payload
     },
@@ -47,10 +46,25 @@ export const chatSlice = createSlice({
       state.users.push(action.payload)
     },
     leaveUser: (state, action: PayloadAction<string>) => {
-      state.users.filter((i) => String(i.id) !== String(action.payload))
+      state.users = state.users.filter((i) => String(i.id) !== String(action.payload))
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload
+    },
+    setUserPoses: (state, action: PayloadAction<{ [key: string]: UserPose }>) => {
+      state.userPoses = { ...state.userPoses, ...action.payload }
+    },
+    incrementUserHearts: (state, action: PayloadAction<string>) => {
+      const newUsers = state.users.map((user) => {
+        if (String(user.id) === action.payload) {
+          return { ...user, hearts: user.hearts + 1 }
+        }
+        return user
+      })
+      state.users = newUsers
+    },
+    setUserDetails: (state, action: PayloadAction<UserEntity | null>) => {
+      state.userDetails = action.payload
     },
   },
 })
@@ -59,7 +73,6 @@ export const {
   setMessages,
   setSocketId,
   setRoomId,
-  leaveRoom,
   setReply,
   addMessage,
   joinUser,
@@ -67,6 +80,9 @@ export const {
   setUsers,
   setLoading,
   setInit,
+  setUserPoses,
+  incrementUserHearts,
+  setUserDetails,
 } = chatSlice.actions
 
 export const selectChat = (state: RootState) => state.chat

@@ -100,6 +100,7 @@ interface UserEntity {
   gender: string
   age: number
   position: number
+  hearts: number
 }
 
 interface TgWebView {

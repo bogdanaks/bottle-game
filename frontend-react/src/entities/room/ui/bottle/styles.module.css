@@ -1,16 +1,30 @@
 .bottle {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 1 / 1;
   transform-origin: center;
-  z-index: 3;
-  padding-bottom: 2%;
+  z-index: 7;
+  position: relative;
+  height: 20%;
 }
 
 .bottleImg {
-  height: 25%;
+  height: 100%;
   cursor: pointer;
+}
+
+.bottleText {
+  position: absolute;
+  bottom: 33%;
+  color: var(--text);
+}
+
+@media screen and (max-height: 600px) {
+  .bottleText {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .bottleText {
+    font-size: 14px;
+  }
 }

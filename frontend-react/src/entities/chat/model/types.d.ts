@@ -7,9 +7,12 @@ interface ChatState {
   roomId: string | null
   reply: ChatMessage | null
   isLoading: boolean
+  userPoses: { [key: string]: UserPose }
+  userDetails: UserEntity | null
 }
 
 interface InitState {
+  lastHistory: HistoryEvent
   messages: ChatMessage[]
   users: UserEntity[]
   socketId: string
@@ -27,4 +30,9 @@ interface ChatMessage {
 interface NewChatMessage {
   message: string
   reply: ChatMessage | null
+}
+
+interface UserPose {
+  x: string
+  y: string
 }

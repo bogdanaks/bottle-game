@@ -1,5 +1,5 @@
 interface GameState {
-  game: GameData | null
+  history: HistoryEvent[]
 }
 
 interface GamePayload {
@@ -10,9 +10,30 @@ interface GamePayload {
 }
 
 interface GameData {
-  tick_time: number
-  user_from: string
-  user_to: string
-  position_to: string
-  position_from: string
+  tick_time: string
+  user_target: string
+  user_cur: string
+  user_next: string
+  position_target: string
+  position_cur: string
+  position_next: string
+  status: "waiting" | "playing"
 }
+
+interface GameLocalState {
+  isRunKissTime: boolean
+}
+
+interface HistoryEvent {
+  event: HistoryEvents
+  timestamp: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  payload?: any
+}
+
+type HistoryEvents =
+  | "gameStart"
+  | "waitingSpin"
+  | "userSpinBottle"
+  | "confirmationTime"
+  | "kissUser"

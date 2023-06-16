@@ -1,0 +1,37 @@
+.wrapper {
+  width: 80%;
+  display: flex;
+  position: fixed;
+  top: 0;
+  padding: 24px;
+  background-color: #fff;
+  z-index: 99999;
+  border-radius: 8px;
+  margin-top: 10%;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header svg {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.name {
+  font-size: 17px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  margin-right: 24px;
+  overflow: hidden;
+  margin-top: 12px;
+}

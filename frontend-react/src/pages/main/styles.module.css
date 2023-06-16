@@ -1,15 +1,21 @@
 .top {
   display: flex;
-  height: 50%;
+  height: 50vh;
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  background-image: url("shared/assets/images/table.jpg");
+  background-repeat: round;
+  background-size: cover;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .bottom {
   display: flex;
-  height: 50%;
+  height: 50vh;
   width: 100%;
   position: absolute;
   bottom: 0;
