@@ -1,6 +1,6 @@
 services:
   client:
-    container_name: bottlegame-frontend
+    container_name: frontend
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,6 +9,7 @@ services:
       - "/app/node_modules"
     ports:
       - 80:80
+      - 443:443
     environment:
       - NODE_ENV=development
       - REACT_APP_API_URL=${REACT_APP_API_URL}

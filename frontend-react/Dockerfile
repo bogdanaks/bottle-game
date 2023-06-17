@@ -6,11 +6,10 @@ COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 RUN npm ci
 COPY . /app
-CMD ["npm", "run", "build"]
+RUN npm run build
 
 FROM nginx:latest
-
+COPY ./nginx/ssl/fullchain.pem /etc/nginx/conf.d/fullchain.pem
+COPY ./nginx/ssl/privkey.pem /etc/nginx/conf.d/privkey.pem
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build /usr/share/nginx/html
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-CMD ["nginx", "-g", "daemon off;"]
