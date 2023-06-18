@@ -14,6 +14,7 @@ const TelegramProvider = () => {
       return
     }
 
+    console.log("TEST_MODE", config.TEST_MODE)
     if (config.TEST_MODE) {
       setHasTg(config.TEST_MODE)
     }
