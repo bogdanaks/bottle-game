@@ -1,5 +1,5 @@
 import { appConfig } from "@/config"
-import { Job, Queue, Worker, MinimalQueue } from "bullmq"
+import { Job, Queue, Worker } from "bullmq"
 import { Redis } from "ioredis"
 
 export class Task {
