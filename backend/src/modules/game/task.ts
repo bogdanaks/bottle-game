@@ -1,3 +1,4 @@
+import { appConfig } from "@/config"
 import { Job, Queue, Worker, MinimalQueue } from "bullmq"
 import { Redis } from "ioredis"
 
@@ -7,7 +8,9 @@ export class Task {
   private worker
 
   constructor() {
-    this.ioredis = new Redis()
+    this.ioredis = new Redis({
+      host: appConfig.redisHost,
+    })
     this.queue = new Queue("taskQueue", {
       connection: this.ioredis,
       defaultJobOptions: { removeOnComplete: true },

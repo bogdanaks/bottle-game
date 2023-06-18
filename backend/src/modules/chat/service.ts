@@ -1,7 +1,5 @@
-import { Redis } from "ioredis"
 import { RedisService } from "../redis/service"
 import { NewMessage } from "@/common/types"
-import { UserEntity } from "../user"
 
 interface ChatServiceProps {
   redisService: RedisService

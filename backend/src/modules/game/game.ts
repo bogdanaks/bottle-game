@@ -7,6 +7,7 @@ import { UserEntityWithPosition } from "@/common/types"
 import { UserEntity } from "../user"
 import { Task } from "./task"
 import { chooseNextPos } from "@/libs/get-next-position"
+import { appConfig } from "@/config"
 
 interface GameProps {
   room: Room
@@ -24,7 +25,9 @@ export class Game {
   private taskManager
 
   constructor({ room, user, redisService, socketService }: GameProps) {
-    this.ioredis = new Redis()
+    this.ioredis = new Redis({
+      host: appConfig.redisHost,
+    })
     this.room = room
     this.user = user
     this.redisService = redisService

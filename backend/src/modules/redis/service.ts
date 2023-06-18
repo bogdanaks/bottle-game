@@ -1,8 +1,7 @@
 import { Redis } from "ioredis"
-import { nanoid } from "nanoid"
 
 import { UserEntity } from "../user"
-import { GameState, HistoryEvent, NewMessage, UserInRoom } from "@/common/types"
+import { HistoryEvent, NewMessage, UserInRoom } from "@/common/types"
 import { appConfig } from "@/config"
 
 export class RedisService {
@@ -10,8 +9,12 @@ export class RedisService {
   protected subClient
 
   constructor() {
-    this.pubClient = new Redis()
-    this.subClient = new Redis()
+    this.pubClient = new Redis({
+      host: appConfig.redisHost,
+    })
+    this.subClient = new Redis({
+      host: appConfig.redisHost,
+    })
   }
 
   // USERS
