@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc -p .",
+    "start": "ts-node ./src/app.ts",
     "dev": "nodemon .",
     "redis-start": "redis-server",
     "redis-clear": "redis-cli flushall",

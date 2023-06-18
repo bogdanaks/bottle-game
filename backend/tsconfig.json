@@ -9,6 +9,7 @@
     "module": "CommonJS",
     "strict": true,
     "baseUrl": "./src",
+    "outDir": "build",
     "paths": {
       "@/*": [
         "*"
