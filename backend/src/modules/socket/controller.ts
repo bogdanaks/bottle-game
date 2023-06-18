@@ -40,14 +40,10 @@ export class SocketController {
 
     const users = await this.room.getUsersByRoomId(userRoomId)
     const gameStatus = await this.game.getGameStatus(userRoomId)
-    console.log("gameStatus", gameStatus)
 
     if (users.length >= appConfig.roomSize && (!gameStatus || gameStatus === "waiting")) {
       await this.game.start(userRoomId)
     }
-    // await this.game.start(userRoomId)
-
-    // await this.game.start(userRoomId, socket.data.user) // TODO удалить, тк игра будет запускаться от каждого входа
 
     await this.listeners(socket, userRoomId)
   }
@@ -129,11 +125,5 @@ export class SocketController {
   async onDisconnect(userId: string, roomId: string) {
     await this.socketService.emitRoomLeave(userId, roomId)
     await this.room.userLeave(userId, roomId)
-    // await this.redisService.pubUserLeave({
-    //   userId: String(socket.data.user.id),
-    //   roomId: String(roomId),
-    //   type: SocketEvents.RoomUserLeave,
-    //   data: null,
-    // })
   }
 }

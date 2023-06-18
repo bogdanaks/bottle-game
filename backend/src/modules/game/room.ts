@@ -1,21 +1,26 @@
 import { RedisService } from "@/modules/redis/service"
 import { nanoid } from "nanoid"
-import { UserEntity, UserService } from "../user"
+import { UserService } from "../user"
 import { UserEntityWithPosition } from "@/common/types"
+import { User } from "./user"
 
 export class Room {
   private redisService
   private userService
+  private user
 
   constructor({
     redisService,
     userService,
+    user,
   }: {
     redisService: RedisService
     userService: UserService
+    user: User
   }) {
     this.redisService = redisService
     this.userService = userService
+    this.user = user
   }
 
   async getFree() {
@@ -39,6 +44,7 @@ export class Room {
   }
 
   async userLeave(userId: string, roomId: string) {
-    // TODO
+    await this.redisService.removeUserRoomId(userId)
+    await this.redisService.removeUserInRoom(roomId, userId)
   }
 }

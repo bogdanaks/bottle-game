@@ -36,6 +36,10 @@ export class RedisService {
     return await this.pubClient.set(`users:${userId}:roomId`, roomId)
   }
 
+  async removeUserRoomId(userId: string) {
+    return await this.pubClient.del(`users:${userId}:roomId`)
+  }
+
   public async getUsersByRoomId(roomId: string): Promise<UserInRoom[]> {
     const users = await this.subClient.lrange(`rooms:${roomId}:users`, 0, 8)
     return users ? users.map((i) => JSON.parse(i)) : []
@@ -51,6 +55,13 @@ export class RedisService {
       `rooms:${roomId}:users`,
       JSON.stringify({ userId, position, hearts: 0 })
     )
+  }
+
+  public async removeUserInRoom(roomId: string, userId: string) {
+    const users = await this.getUsersByRoomId(roomId)
+    const usersWithoutMe = users.filter((i) => String(i.userId) !== String(userId))
+
+    await this.pubClient.set(`rooms:${roomId}:users`, JSON.stringify(usersWithoutMe))
   }
 
   public async incrementUserHearts(roomId: string, userId: string) {

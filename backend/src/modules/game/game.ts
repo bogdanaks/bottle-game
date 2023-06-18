@@ -41,7 +41,6 @@ export class Game {
     if (userRoomId) return userRoomId
 
     const newRoomId = await this.room.getFree()
-    console.log("newRoomId", newRoomId)
     await this.user.updateRoomId(userId, newRoomId)
     await this.user.addUserInRoom(userId, newRoomId)
     return newRoomId
@@ -80,94 +79,6 @@ export class Game {
       roomId
     )
     await this.setWaitingSpin(roomId, usersSorted[0])
-  }
-
-  async tick(data: { roomId: string }) {
-    console.log("tick", data)
-    // TODO тут описать логику обновления состояния и пушить его в хистори
-    const gameStatus = await this.getGameStatus(data.roomId)
-    const history = await this.getLastHistory(data.roomId)
-    const users = await this.room.getUsersByRoomId(data.roomId)
-    const usersSorted = users.sort((a, b) => Number(a.position) - Number(b.position))
-
-    if (!history) {
-      await this.socketService.emitHistoryPush(
-        {
-          event: `gameStart`,
-          timestamp: String(Date.now()),
-        },
-        data.roomId
-      )
-      await this.setWaitingSpin(data.roomId, usersSorted[0])
-      return
-    }
-
-    // console.log("usersSorted", usersSorted)
-
-    // await this.socketService.emitHistoryPush(
-    //   {
-    //     event: `gameTest`,
-    //     timestamp: String(Date.now()),
-    //   },
-    //   data.roomId
-    // )
-
-    // const userCur = !prevState ? usersSorted[0].userId : prevState.user_next
-    // const usersWithoutMe = await this.userToRoomService.getRoomUsersWithoutUserId(
-    //   payload.roomId,
-    //   userCur || ""
-    // )
-    // const findUserCur = usersSorted.find((i) => String(i.userId) === userCur)
-    // if (!findUserCur) throw new Error("findUserCur undefined")
-    // if (!usersWithoutMe.length) {
-    //   const gameData: GameState = {
-    //     tick_time: String(Date.now()),
-    //     user_target: null,
-    //     user_cur: userCur || "",
-    //     user_next: null,
-    //     position_target: null,
-    //     position_cur: findUserCur.position,
-    //     position_next: null,
-    //     status: "waiting",
-    //   }
-    //   await this.redisService.pub(`roomId:${payload.roomId}`, {
-    //     roomId: payload.roomId,
-    //     userId: payload.userId,
-    //     type: RedisEvents.GameTick,
-    //     data: gameData,
-    //   })
-    //   return
-    // }
-    // const userNext = await this.userToRoomService.getNextPosUser(
-    //   userCur || "",
-    //   payload.roomId,
-    //   Number(findUserCur.position)
-    // )
-    // const allUsers = await this.userToRoomService.getRoomUsersWithoutUserId(
-    //   payload.roomId,
-    //   userCur || ""
-    // )
-    // console.log("allUsers", allUsers)
-    // const status = !allUsers.length ? "waiting" : "playing"
-    // const randomUser =
-    //   status === "playing" ? allUsers[Math.floor(Math.random() * allUsers.length)] : null
-    // const gameData: GameState = {
-    //   tick_time: String(Date.now()),
-    //   user_target: randomUser ? String(randomUser.userId) : null,
-    //   user_cur: userCur || "",
-    //   user_next: userNext ? userNext.userId : null,
-    //   position_target: randomUser ? String(randomUser.position) : null,
-    //   position_cur: findUserCur.position,
-    //   position_next: userNext ? String(userNext.position) : null,
-    //   status,
-    // }
-    // await this.redisService.pub(`roomId:${payload.roomId}`, {
-    //   roomId: payload.roomId,
-    //   userId: payload.userId,
-    //   type: RedisEvents.GameTick,
-    //   data: gameData,
-    // })
-    // await this.redisStore.updateGameState(payload.roomId, gameData)
   }
 
   async setWaitingSpin(roomId: string, user: UserEntityWithPosition) {
