@@ -7,8 +7,6 @@ const TelegramProvider = () => {
   const [hasTg, setHasTg] = useState(false)
 
   useEffect(() => {
-    console.log("TEST_MODE", config.TEST_MODE)
-
     if (Object.keys(window.Telegram.WebApp.initDataUnsafe).length) {
       window.Telegram.WebApp.expand()
       window.Telegram.WebApp.enableClosingConfirmation()
