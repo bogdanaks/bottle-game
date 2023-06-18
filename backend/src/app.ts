@@ -44,6 +44,17 @@ AppDataSource.initialize()
     app.use(express.json())
     app.use("/api/v1", routes)
 
+    app.get(
+      "/api/v1/status",
+      (req, res, next) => {
+        console.log("the response will be sent by the next function ...")
+        next()
+      },
+      function (req, res) {
+        res.send("Ok!")
+      }
+    )
+
     DI.register({
       io: asValue(io),
     })
