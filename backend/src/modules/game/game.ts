@@ -26,6 +26,7 @@ export class Game {
 
   constructor({ room, user, redisService, socketService }: GameProps) {
     this.ioredis = new Redis({
+      port: appConfig.redisPort,
       host: appConfig.redisHost,
     })
     this.room = room

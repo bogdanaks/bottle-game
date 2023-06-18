@@ -6,6 +6,7 @@ assert(process.env.REDIS_HOST, "Env REDIS_HOST undefined")
 
 export const appConfig = {
   port: Number(process.env.PORT),
+  redisPort: Number(process.env.REDIS_PORT) || 6379,
   redisHost: process.env.REDIS_HOST || "",
   tgToken: process.env.TG_TOKEN || "",
   roomSize: 3,

@@ -9,6 +9,7 @@ export class Task {
 
   constructor() {
     this.ioredis = new Redis({
+      port: appConfig.redisPort,
       host: appConfig.redisHost,
     })
     this.queue = new Queue("taskQueue", {
