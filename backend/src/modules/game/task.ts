@@ -16,9 +16,15 @@ export class Task {
       connection: this.ioredis,
       defaultJobOptions: { removeOnComplete: true },
     })
-    this.worker = new Worker("taskQueue", async (job) => {
-      console.log(`Task job executed: ${job.id}`)
-    })
+    this.worker = new Worker(
+      "taskQueue",
+      async (job) => {
+        console.log(`Task job executed: ${job.id}`)
+      },
+      {
+        connection: this.ioredis,
+      }
+    )
   }
 
   public async createTask(delayInSeconds: number, callback: any) {
