@@ -13,10 +13,10 @@ export const useTelegram = () => {
     utils: window.Telegram.Utils,
     webApp: window.Telegram.WebApp,
     webView: window.Telegram.WebView,
-    user: !config.TEST_MODE
-      ? window.Telegram.WebApp.initDataUnsafe.user
-      : getMockTgUser(getgUserLocalStorage()).user,
-    // user: window.Telegram.WebApp.initDataUnsafe.user,
+    // user: !config.TEST_MODE
+    //   ? window.Telegram.WebApp.initDataUnsafe.user
+    //   : getMockTgUser(getgUserLocalStorage()).user,
+    user: window.Telegram.WebApp.initDataUnsafe.user,
     haptic: {
       impactOccurred: window.Telegram.WebApp.HapticFeedback.impactOccurred,
       notificationOccurred: window.Telegram.WebApp.HapticFeedback.notificationOccurred,
