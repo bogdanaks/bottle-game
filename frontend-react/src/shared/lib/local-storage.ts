@@ -1,4 +1,3 @@
-export const getTestUser = () => {
-  const testUser = window.localStorage.getItem("testUser")
-  return testUser ? JSON.parse(testUser) : null
+export const getTestUserId = () => {
+  return window.localStorage.getItem("testUserId")
 }

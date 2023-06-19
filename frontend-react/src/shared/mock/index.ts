@@ -54,12 +54,12 @@ export const mockUserData4 = {
   hash: "8ac4765d56b0f95932b2a129c0729647e86cc0d3c9a375c768e4e9dcaff352f9",
 }
 
-export const getMockTgUser = (userId: string) => {
-  if (userId === "856090777") return mockUserData2
-  if (userId === "856090666") return mockUserData3
-  if (userId === "856090555") return mockUserData4
+export const getMockTgUser = (userId: string): TgUser => {
+  if (userId === "856090777") return mockUserData2.user
+  if (userId === "856090666") return mockUserData3.user
+  if (userId === "856090555") return mockUserData4.user
 
-  return mockUserData
+  return mockUserData.user
 }
 
 const mockUserEntity = {

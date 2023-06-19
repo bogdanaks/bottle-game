@@ -1,5 +1,6 @@
 import { config } from "shared/config"
-import { getTestUser } from "shared/lib/local-storage"
+import { getTestUserId } from "shared/lib/local-storage"
+import { getMockTgUser } from "shared/mock"
 
 export interface Telegram {
   utils: TgWebUtils
@@ -9,12 +10,13 @@ export interface Telegram {
 }
 
 export const useTelegram = () => {
-  const testUser = getTestUser()
-  const user: TgUser = !config.TEST_MODE
-    ? window.Telegram.WebApp.initDataUnsafe.user
-    : testUser
-    ? testUser
-    : window.Telegram.WebApp.initDataUnsafe.user
+  const testUserId = getTestUserId()
+
+  const user =
+    config.TEST_MODE && testUserId
+      ? getMockTgUser(testUserId)
+      : window.Telegram.WebApp.initDataUnsafe.user
+
   const telegram = {
     utils: window.Telegram.Utils,
     webApp: window.Telegram.WebApp,
