@@ -22,6 +22,8 @@ const SocketProvider = () => {
   const dispatch = useAppDispatch()
   const [socketConnected, setSocketConnected] = useState<Socket | null>(null)
 
+  console.log("tgUser", tgUser)
+
   useEffect(() => {
     if (!tgUser) return
 
