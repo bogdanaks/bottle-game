@@ -2,7 +2,7 @@
   display: flex;
   transform-origin: center;
   z-index: 7;
-  position: relative;
+  position: absolute;
   height: 20%;
 }
 
