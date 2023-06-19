@@ -15,7 +15,7 @@ export const Room = () => {
     <div className={styles.roomWrapper}>
       <Header />
       <div className={styles.container} ref={scope}>
-        <ConfirmKiss handleKissClick={handleKissClick} />
+        {event && <ConfirmKiss handleKissClick={handleKissClick} />}
         <Bottle />
         {userDetails && <UserDetails user={userDetails} />}
         {event === "kissUser" && <Kissing />}

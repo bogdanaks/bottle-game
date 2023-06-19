@@ -63,7 +63,7 @@ export const ChatFooter = () => {
         <input
           type="text"
           className={`text-sm rounded-lg block w-full p-2.5 ${styles.input}`}
-          placeholder="Type message.."
+          placeholder="Введите сообщение.."
           required
           value={input}
           onChange={(e) => setInput(e.target.value)}

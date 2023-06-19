@@ -77,11 +77,9 @@ export const Bottle = () => {
     runAnimationOpacityHide()
   }, [lastHistory])
 
-  if (!lastHistory) return null
-
   return (
     <>
-      {lastHistory.event === "waitingSpin" && isMe && !isShowText && (
+      {lastHistory?.event === "waitingSpin" && isMe && !isShowText && (
         <span className={styles.bottleText}>Крути бутылку! {count}</span>
       )}
       <motion.div className={styles.bottle} onClick={onSpinBottle} ref={scope}>

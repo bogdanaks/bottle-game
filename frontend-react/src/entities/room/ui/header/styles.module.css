@@ -3,13 +3,12 @@
   min-width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   z-index: 10;
   padding: 0 24px;
 }
 
 .settingsBtn {
-  margin-left: auto;
   height: 100%;
   display: flex;
   align-items: center;

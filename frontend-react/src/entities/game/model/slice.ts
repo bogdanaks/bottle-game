@@ -19,7 +19,7 @@ export const gameSlice = createSlice({
 export const { pushHistory } = gameSlice.actions
 
 export const selectHistory = (state: RootState) => state.game.history
-export const selectLastHistory = (state: RootState) =>
+export const selectLastHistory = (state: RootState): HistoryEvent | undefined =>
   state.game.history[state.game.history.length - 1]
 
 export const gameReducer = gameSlice.reducer
