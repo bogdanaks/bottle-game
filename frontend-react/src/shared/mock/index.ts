@@ -62,10 +62,6 @@ export const getMockTgUser = (userId: string) => {
   return mockUserData
 }
 
-export const getgUserLocalStorage = () => {
-  return window.localStorage.getItem("tg_test_user_id") || ""
-}
-
 const mockUserEntity = {
   id: 856090780,
   first_name: "Bogdan",
