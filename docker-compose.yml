@@ -18,6 +18,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: always
     networks:
       - app_network
   redis:
@@ -28,6 +29,7 @@ services:
     command: redis-server
     ports:
       - "6379:6379"
+    restart: always
     networks:
       - app_network
   client:
@@ -46,6 +48,7 @@ services:
     environment:
       - REACT_APP_API_URL=https://bogdanaks.ru
       - REACT_APP_TEST_MODE=false
+    restart: always
     networks:
       - app_network
   backend:
@@ -71,6 +74,7 @@ services:
       - TG_TOKEN=5972839269:AAG5vsu9Vfc_C44ZC04T8j5LM2UeLbhJfWc
     ports:
       - "5000:5000"
+    restart: always
     networks:
       - app_network
   telegram_bot:
@@ -83,6 +87,7 @@ services:
       - "/app/node_modules"
     environment:
       - TG_TOKEN=5972839269:AAG5vsu9Vfc_C44ZC04T8j5LM2UeLbhJfWc
+    restart: always
     networks:
       - app_network
 networks:
