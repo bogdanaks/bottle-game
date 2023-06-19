@@ -17,23 +17,27 @@ async function main() {
       Message.PhotoMessage &
       Message.TextMessage
 
-    console.log("Message:", msg)
     const msgText = msg.text
+    if (!msgText) return
     console.log("Message text:", msgText)
 
     ctx.reply(msgText)
   })
 
   bot.on("callback_query", async (ctx) => {
-    ctx.answerGameQuery("https://bogdanaks.ru")
+    try {
+      ctx.answerGameQuery("https://bogdanaks.ru")
+    } catch (error) {
+      console.error(error)
+    }
   })
 
   bot.launch()
   console.log("Bot started!")
 
   // Enable graceful stop
-  process.once("SIGINT", () => bot.stop("SIGINT"))
-  process.once("SIGTERM", () => bot.stop("SIGTERM"))
+  // process.once("SIGINT", () => bot.stop("SIGINT"))
+  // process.once("SIGTERM", () => bot.stop("SIGTERM"))
 }
 
 main()
