@@ -25,7 +25,7 @@ async function main() {
   })
 
   bot.on("callback_query", async (ctx) => {
-    ctx.answerGameQuery("https://6194-188-242-76-171.ngrok-free.app")
+    ctx.answerGameQuery("https://bogdanaks.ru")
   })
 
   bot.launch()
