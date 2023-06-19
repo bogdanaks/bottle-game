@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   database:
     container_name: database
@@ -13,8 +13,8 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - redis
-    healthcheck: 
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -68,9 +68,21 @@ services:
       - DB_NAME=bottlegame
       - DB_PASSWORD=postgres
       - DB_PORT=5432
-      - TG_TOKEN=6034582865:AAGjXj3BtDq2ynfHfsC_mmIyYD34j7364KU
+      - TG_TOKEN=5972839269:AAG5vsu9Vfc_C44ZC04T8j5LM2UeLbhJfWc
     ports:
       - "5000:5000"
+    networks:
+      - app_network
+  telegram_bot:
+    container_name: telegram_bot
+    build:
+      context: ./telegram-bot
+      dockerfile: Dockerfile
+    volumes:
+      - "./telegram-bot:/app"
+      - "/app/node_modules"
+    environment:
+      - TG_TOKEN=5972839269:AAG5vsu9Vfc_C44ZC04T8j5LM2UeLbhJfWc
     networks:
       - app_network
 networks:
