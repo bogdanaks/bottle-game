@@ -26,7 +26,7 @@ export const ChatMessage = ({ chatMessage, prevUser, nextUser }: ChatMessageProp
   const dispatch = useAppDispatch()
   const { impactOccurred } = useTelegram()
 
-  const { isMe, isFirst, isLast } = useChatMessage({
+  const { isFirst, isLast } = useChatMessage({
     chatMessage,
     prevUser,
     nextUser,
@@ -35,7 +35,7 @@ export const ChatMessage = ({ chatMessage, prevUser, nextUser }: ChatMessageProp
   const x = useMotionValue(0)
   const spring = useSpring(x, { duration: 0.3, bounce: 0.8 })
   const opacity = useTransform(spring, [0, -200], [1, 0.4])
-  const scale = useTransform(spring, [0, -50], [0, 1])
+  const scale = useTransform(spring, [0, -30], [0, 1])
   const transform = useMotionTemplate`scale(${scale})`
 
   const bindDoubleClick = useDoubleTap(() => {
@@ -55,6 +55,7 @@ export const ChatMessage = ({ chatMessage, prevUser, nextUser }: ChatMessageProp
     }
   }, [])
 
+  const isMe = false
   return (
     <li
       className={classNames(styles.wrapper, {
