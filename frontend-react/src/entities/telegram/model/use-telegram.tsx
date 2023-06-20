@@ -36,16 +36,19 @@ export const useTelegram = () => {
 
   const impactOccurred = (style: ImpactOccurredStyle) => {
     if (!hasVibration) return
+    if (telegram.webApp.version < "6.1") return
     telegram.haptic.impactOccurred(style)
   }
 
   const notificationOccurred = (type: "error" | "success" | "warning") => {
     if (!hasVibration) return
+    if (telegram.webApp.version < "6.1") return
     telegram.haptic.notificationOccurred(type)
   }
 
   const selectionChanged = () => {
     if (!hasVibration) return
+    if (telegram.webApp.version < "6.1") return
     telegram.haptic.selectionChanged()
   }
 

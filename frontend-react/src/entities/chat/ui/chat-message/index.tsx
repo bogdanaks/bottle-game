@@ -38,8 +38,7 @@ export const ChatMessage = ({ chatMessage, prevUser, nextUser }: ChatMessageProp
   const scale = useTransform(spring, [0, -50], [0, 1])
   const transform = useMotionTemplate`scale(${scale})`
 
-  const bindDoubleClick = useDoubleTap((event) => {
-    console.log("Double tapped")
+  const bindDoubleClick = useDoubleTap(() => {
     dispatch(setReply(chatMessage))
     impactOccurred("heavy")
   })
