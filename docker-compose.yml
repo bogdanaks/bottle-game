@@ -77,19 +77,19 @@ services:
     restart: always
     networks:
       - app_network
-  telegram_bot:
-    container_name: telegram_bot
-    build:
-      context: ./telegram-bot
-      dockerfile: Dockerfile
-    volumes:
-      - "./telegram-bot:/app"
-      - "/app/node_modules"
-    environment:
-      - TG_TOKEN=5972839269:AAG5vsu9Vfc_C44ZC04T8j5LM2UeLbhJfWc
-    restart: always
-    networks:
-      - app_network
+  # telegram_bot:
+  #   container_name: telegram_bot
+  #   build:
+  #     context: ./telegram-bot
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - "./telegram-bot:/app"
+  #     - "/app/node_modules"
+  #   environment:
+  #     - TG_TOKEN=5972839269:AAG5vsu9Vfc_C44ZC04T8j5LM2UeLbhJfWc
+  #   restart: always
+  #   networks:
+  #     - app_network
 networks:
   app_network:
     driver: bridge
