@@ -1,6 +1,7 @@
 import classNames from "classnames"
 import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { useEffect } from "react"
+import { useDoubleTap } from "use-double-tap"
 
 import { useAppDispatch } from "app/hooks"
 
@@ -37,6 +38,12 @@ export const ChatMessage = ({ chatMessage, prevUser, nextUser }: ChatMessageProp
   const scale = useTransform(spring, [0, -50], [0, 1])
   const transform = useMotionTemplate`scale(${scale})`
 
+  const bindDoubleClick = useDoubleTap((event) => {
+    console.log("Double tapped")
+    dispatch(setReply(chatMessage))
+    impactOccurred("heavy")
+  })
+
   useEffect(() => {
     scale.on("change", (latest) => {
       if (latest < 0.99) return
@@ -59,6 +66,7 @@ export const ChatMessage = ({ chatMessage, prevUser, nextUser }: ChatMessageProp
         [styles.hasTailMe]: isMe && isLast,
         [styles.hasTailThem]: !isMe && isLast,
       })}
+      {...bindDoubleClick}
     >
       <motion.div
         className={styles.container}
