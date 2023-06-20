@@ -21,6 +21,8 @@ interface TgWebApp {
   setHeaderColor: (rgb: string) => void
   setBackgroundColor: (rgb: string) => void
   setText: (text: string) => void
+  offEvent: (eventType: string, callback: Callback) => void
+  onEvent: (eventType: string, callback: Callback) => void
   initData: string
   initDataUnsafe: TgInitDataUnsafe
   version: string
