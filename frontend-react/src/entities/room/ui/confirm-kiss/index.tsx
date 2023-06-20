@@ -62,15 +62,21 @@ export const ConfirmKiss = ({ handleKissClick }: ConfirmKissProps) => {
   }
 
   useEffect(() => {
-    if (!lastHistory || lastHistory.event !== "confirmationTime") return
-    runAnimationOpacityVisible()
-    startCountdown()
-  }, [lastHistory])
+    if (!lastHistory || !lastHistory.event) return
 
-  useEffect(() => {
-    if (!lastHistory || lastHistory.event !== "waitingSpin") return
-    runAnimationOpacityHide()
-    resetCountdown()
+    switch (lastHistory.event) {
+      case "waitingSpin":
+        runAnimationOpacityHide()
+        resetCountdown()
+        break
+      case "confirmationTime":
+        runAnimationOpacityVisible()
+        startCountdown()
+        break
+
+      default:
+        break
+    }
   }, [lastHistory])
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import { HiHeart } from "react-icons/hi2"
 
 import styles from "./styles.module.css"
 
-export const Kissing = () => {
+export const Heart = () => {
   return (
     <div className={styles.wrapper}>
       <motion.div id="heart" initial={{ x: 0, y: 0, opacity: 1 }} style={{ opacity: 1 }}>

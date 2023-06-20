@@ -3,7 +3,7 @@ import { useRoom } from "entities/room/model/use-room"
 import { Bottle } from "../bottle"
 import { ConfirmKiss } from "../confirm-kiss"
 import { Header } from "../header"
-import { Kissing } from "../kissing"
+import { Heart } from "../heart"
 import { Player } from "../player"
 import { UserDetails } from "../user-details"
 import styles from "./styles.module.css"
@@ -18,7 +18,7 @@ export const Room = () => {
         {event && <ConfirmKiss handleKissClick={handleKissClick} />}
         <Bottle />
         {userDetails && <UserDetails user={userDetails} />}
-        {event === "kissUser" && <Kissing />}
+        {event === "kissUser" && <Heart />}
         <ul className={styles.playersNew}>
           {Array(8)
             .fill(0)
