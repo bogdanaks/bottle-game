@@ -22,10 +22,6 @@ const TelegramProvider = () => {
     if (config.TEST_MODE) {
       setHasTg(config.TEST_MODE)
     }
-
-    return () => {
-      // window.Telegram.WebApp.onEvent('viewportChanged', windowExpand)
-    }
   }, [])
 
   if (!hasTg) {
