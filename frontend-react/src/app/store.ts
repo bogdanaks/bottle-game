@@ -18,6 +18,7 @@ import { chatReducer } from "entities/chat/model/slice"
 import { consoleAlertReducer } from "entities/console-alert/model/slice"
 import { gameApi } from "entities/game/api"
 import { gameReducer } from "entities/game/model/slice"
+import { userReducer } from "entities/user/model/slice"
 
 const persistConfig = {
   key: "root",
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   chat: chatReducer,
   auth: authReducer,
   game: gameReducer,
+  user: userReducer,
   [authApi.reducerPath]: authApi.reducer,
   [chatApi.reducerPath]: chatApi.reducer,
   [gameApi.reducerPath]: gameApi.reducer,

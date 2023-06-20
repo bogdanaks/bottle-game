@@ -65,7 +65,7 @@ interface TgWebApp {
   HapticFeedback: {
     impactOccurred: (style: ImpactOccurredStyle) => void
     notificationOccurred: (type: "error" | "success" | "warning") => void
-    selectionChanged: (style) => void
+    selectionChanged: () => void
   }
   isClosingConfirmationEnabled: boolean
   enableClosingConfirmation: () => void
@@ -135,4 +135,8 @@ type MainButtonParams = {
   text_color?: string
   is_active?: boolean
   is_visible?: boolean
+}
+
+interface AppSettingsLS {
+  hasVibration?: boolean
 }

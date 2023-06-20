@@ -23,7 +23,7 @@ interface ChatMessageProps {
 
 export const ChatMessage = ({ chatMessage, prevUser, nextUser }: ChatMessageProps) => {
   const dispatch = useAppDispatch()
-  const { haptic } = useTelegram()
+  const { impactOccurred } = useTelegram()
 
   const { isMe, isFirst, isLast } = useChatMessage({
     chatMessage,
@@ -41,7 +41,7 @@ export const ChatMessage = ({ chatMessage, prevUser, nextUser }: ChatMessageProp
     scale.on("change", (latest) => {
       if (latest < 0.99) return
       dispatch(setReply(chatMessage))
-      haptic.impactOccurred("heavy")
+      impactOccurred("heavy")
     })
 
     return () => {

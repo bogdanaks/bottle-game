@@ -17,7 +17,7 @@ export const useRoom = () => {
   const [usersConfirm, setUsersConfirm] = useState<UserEntity[]>([])
   const dispatch = useAppDispatch()
   const [kissUser] = useKissUserMutation()
-  const { user: tgUser, haptic } = useTelegram()
+  const { user: tgUser, impactOccurred } = useTelegram()
 
   const runResetAnimConfirmTime = () => {
     const [currentUser, targetUser] = usersConfirm
@@ -151,7 +151,7 @@ export const useRoom = () => {
         setUsersConfirm([lastHistory.payload.user_current, lastHistory.payload.user_target])
         break
       case "kissUser":
-        haptic.impactOccurred("heavy")
+        impactOccurred("rigid")
         runKissAnimtation(lastHistory.payload.user_current, lastHistory.payload.user_target)
         break
 

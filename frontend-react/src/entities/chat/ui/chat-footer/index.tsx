@@ -13,7 +13,7 @@ export const ChatFooter = () => {
   const dispatch = useAppDispatch()
   const { reply } = useAppSelector(selectChat)
   const [sendMessage] = useSendMessageMutation()
-  const { haptic } = useTelegram()
+  const { notificationOccurred } = useTelegram()
 
   const [input, setInput] = useState("")
 
@@ -32,7 +32,7 @@ export const ChatFooter = () => {
       reply,
     }).unwrap()
     dispatch(addMessage(newMsg))
-    haptic.impactOccurred("heavy")
+    notificationOccurred("success")
   }
 
   const handleReplyClose = () => {

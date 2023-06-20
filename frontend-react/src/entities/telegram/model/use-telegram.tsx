@@ -1,3 +1,7 @@
+import { useAppSelector } from "app/hooks"
+
+import { selectAppSettings } from "entities/user/model/slice"
+
 import { config } from "shared/config"
 import { getTestUserId } from "shared/lib/local-storage"
 import { getMockTgUser } from "shared/mock"
@@ -11,6 +15,7 @@ export interface Telegram {
 
 export const useTelegram = () => {
   const testUserId = getTestUserId()
+  const { hasVibration } = useAppSelector(selectAppSettings)
 
   const user =
     config.TEST_MODE && testUserId
@@ -29,12 +34,26 @@ export const useTelegram = () => {
     },
   }
 
-  const windowExpand = () => {
-    window.Telegram.WebApp.expand()
+  const impactOccurred = (style: ImpactOccurredStyle) => {
+    if (!hasVibration) return
+    telegram.haptic.impactOccurred(style)
+  }
+
+  const notificationOccurred = (type: "error" | "success" | "warning") => {
+    if (!hasVibration) return
+    telegram.haptic.notificationOccurred(type)
+  }
+
+  const selectionChanged = () => {
+    if (!hasVibration) return
+    telegram.haptic.selectionChanged()
   }
 
   return {
     ...telegram,
-    windowExpand,
+    windowExpand: window.Telegram.WebApp.expand(),
+    impactOccurred,
+    notificationOccurred,
+    selectionChanged,
   }
 }
