@@ -1,4 +1,4 @@
-import { GameInit, SocketType } from "@/common/types"
+import { GameInit, SocketType, UserEntityWithPosition } from "@/common/types"
 import { SocketService } from "./service"
 import { RedisService } from "../redis/service"
 import { Game } from "@/modules/game/game"
@@ -31,12 +31,13 @@ export class SocketController {
 
   async connect(socket: SocketType) {
     console.log(`[SocketController]: Socket(${socket.id}) connecting`)
-    const userRoomId = await this.game.getUserRoomId(String(socket.data.user.id))
-    const userList = await this.room.getUsersByRoomId(userRoomId)
-    const findUser = userList.find((u) => String(u.id) === String(socket.data.user.id))
-    if (!findUser) return
-
-    await this.socketService.userJoin(socket, userRoomId, findUser)
+    const { newRoomId: userRoomId, freePos } = await this.game.addUserInFreeRoom(
+      String(socket.data.user.id)
+    )
+    console.log("userRoomId", userRoomId, "freePos", freePos)
+    const userWithPos = { ...socket.data.user, position: String(freePos) } as UserEntityWithPosition
+    console.log("userWithPos", userWithPos)
+    await this.socketService.userJoin(socket, userRoomId, userWithPos)
 
     const users = await this.room.getUsersByRoomId(userRoomId)
     const gameStatus = await this.game.getGameStatus(userRoomId)
@@ -54,6 +55,7 @@ export class SocketController {
       async (resolve) => await this.onGameInit(resolve, roomId, socket.id)
     )
     socket.on(SocketEvents.RoomGet, (resolve) => this.onRoomGet(resolve, roomId))
+    socket.on(SocketEvents.RoomUserLeave, (resolve) => this.onDisconnect(resolve, roomId))
     socket.on(SocketEvents.MessageGet, async (resolve) => await this.onMessagesGet(resolve, roomId))
     socket.on(SocketEvents.UsersGet, async (resolve) => await this.onUsersGet(resolve, roomId))
     socket.on(

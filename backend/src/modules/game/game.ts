@@ -36,14 +36,11 @@ export class Game {
     this.taskManager = new Task()
   }
 
-  async getUserRoomId(userId: string): Promise<string> {
-    const userRoomId = await this.user.getRoomId(userId)
-    if (userRoomId) return userRoomId
-
+  async addUserInFreeRoom(userId: string): Promise<{ newRoomId: string; freePos: number }> {
     const newRoomId = await this.room.getFree()
     await this.user.updateRoomId(userId, newRoomId)
-    await this.user.addUserInRoom(userId, newRoomId)
-    return newRoomId
+    const freePos = await this.user.addUserInRoom(userId, newRoomId)
+    return { newRoomId, freePos }
   }
 
   async getGameStatus(roomId: string) {

@@ -75,6 +75,7 @@ const SocketProvider = () => {
     socketConnected.connect()
 
     return () => {
+      socketConnected.emit(SoketEvents.RoomLeave, String(tgUser.id))
       socketConnected.removeAllListeners()
       setSocketConnected(null)
       clearTimeout(timer)

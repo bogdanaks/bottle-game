@@ -25,6 +25,8 @@ export class User {
       throw new Error("Free pos is null")
     }
 
-    return await this.redisService.addUserInRoom(roomId, userId, String(freePos))
+    await this.redisService.addUserInRoom(roomId, userId, String(freePos))
+
+    return freePos
   }
 }
