@@ -59,7 +59,7 @@
 }
 
 .hasTailMe .msg::after {
-  background-color: var(--bg-2);
+  background-color: var(--bg);
   border-bottom-left-radius: 0.5rem;
   right: -40px;
   transform: translate(-30px, -2px);
