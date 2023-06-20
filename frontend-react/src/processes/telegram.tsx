@@ -6,16 +6,28 @@ import { config } from "shared/config"
 const TelegramProvider = () => {
   const [hasTg, setHasTg] = useState(false)
 
+  const windowExpand = () => {
+    window.Telegram.WebApp.expand()
+  }
+
   useEffect(() => {
     if (Object.keys(window.Telegram.WebApp.initDataUnsafe).length) {
-      window.Telegram.WebApp.expand()
+      windowExpand()
       window.Telegram.WebApp.enableClosingConfirmation()
+
+      console.log("window.Telegram.WebApp", window.Telegram.WebApp)
+      // window.Telegram.WebApp.onEvent("viewportChanged", windowExpand)
+
       setHasTg(true)
       return
     }
 
     if (config.TEST_MODE) {
       setHasTg(config.TEST_MODE)
+    }
+
+    return () => {
+      // window.Telegram.WebApp.onEvent('viewportChanged', windowExpand)
     }
   }, [])
 
