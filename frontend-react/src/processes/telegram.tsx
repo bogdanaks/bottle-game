@@ -15,7 +15,7 @@ const TelegramProvider = () => {
       windowExpand()
       window.Telegram.WebApp.enableClosingConfirmation()
 
-      window.Telegram.WebApp.onEvent("viewportChanged", windowExpand)
+      // window.Telegram.WebApp.onEvent("viewportChanged", windowExpand)
 
       setHasTg(true)
       return
