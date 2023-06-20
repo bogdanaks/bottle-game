@@ -1,6 +1,6 @@
 import React, { FC, HTMLAttributes } from "react"
 
-import styles from "./styles.module.scss"
+import styles from "./styles.module.css"
 
 interface WrapperProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
