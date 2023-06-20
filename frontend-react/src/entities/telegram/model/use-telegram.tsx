@@ -29,7 +29,12 @@ export const useTelegram = () => {
     },
   }
 
+  const windowExpand = () => {
+    window.Telegram.WebApp.expand()
+  }
+
   return {
     ...telegram,
+    windowExpand,
   }
 }

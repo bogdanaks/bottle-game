@@ -1,4 +1,6 @@
-import React, { FC, HTMLAttributes } from "react"
+import React, { FC, HTMLAttributes, TouchEvent, useEffect } from "react"
+
+import { useTelegram } from "entities/telegram/model"
 
 import styles from "./styles.module.css"
 
@@ -7,8 +9,40 @@ interface WrapperProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Wrapper: FC<WrapperProps> = ({ children, ...props }) => {
+  const { windowExpand } = useTelegram()
+  const handleScroll = () => {
+    console.log("awd")
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
+  const onTouchStart = () => {
+    console.log("onTouchStart")
+  }
+
+  const onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    windowExpand()
+    console.log("onTouchMove", e)
+  }
+
+  const onTouchEnd = () => {
+    console.log("onTouchEnd")
+  }
+
   return (
-    <div className={styles.wrapper} style={{ ...props.style }}>
+    <div
+      className={styles.wrapper}
+      style={{ ...props.style }}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {children}
     </div>
   )

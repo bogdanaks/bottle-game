@@ -21,7 +21,11 @@ export const ChatMessages = () => {
   }, [chat])
 
   return (
-    <ul className={`${styles.wrapper} pb-2 pl-2 pr-2 pt-1`} ref={messagesListRef}>
+    <ul
+      className={`${styles.wrapper} pb-2 pl-2 pr-2 pt-1`}
+      ref={messagesListRef}
+      id="messages-list"
+    >
       {chat.messages.map((msg, index, array) => (
         <ChatMessage
           key={index}
