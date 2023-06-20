@@ -37,6 +37,7 @@ export const Wrapper: FC<WrapperProps> = ({ children, ...props }) => {
 
   return (
     <div
+      autoFocus
       className={styles.wrapper}
       style={{ ...props.style }}
       onTouchStart={onTouchStart}
